@@ -8,7 +8,7 @@ function App() {
       <LibraryView />
       <main>Main Section</main>
       <section>Preview Section</section>
-      <div></div>
+      <MediaBinView />
     </div>
   );
 }

@@ -51,6 +51,11 @@
     },
     "allowlist": {
       "all": true,
+      "path": { "all": true },
+      "protocol": {
+        "asset": true,
+        "assetScope": ["$LOCALDATA/ProPresLite/*", "$LOCALDATA/ProPresLite/**"]
+      },
       "fs": {
         "scope": [
           "$LOCALDATA",
@@ -70,7 +75,7 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self' asset: https://asset.localhost"
     }
   }
 }

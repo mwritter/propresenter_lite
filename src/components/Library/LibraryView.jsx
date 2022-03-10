@@ -9,9 +9,6 @@ function LibraryView({ setLibraries }) {
   //extract this into a component
   //useWithAdjuster
   const [width, setWidth] = useState("300");
-  const [localData, setLocalData] = useState([]);
-  const [selectedDir, setSelectedDir] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
     readDir("ProPresLite", {
@@ -30,8 +27,6 @@ function LibraryView({ setLibraries }) {
       });
   }, []);
 
-  //Consider spliting this component into two smaller compoents
-  //looks like we need to implement redux to split these components
   //figure out how to resize this in Tauri for some reason 'onDrag' isn't working
   return (
     <div

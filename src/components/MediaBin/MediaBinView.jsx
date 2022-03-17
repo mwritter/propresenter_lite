@@ -2,15 +2,21 @@ import React from "react";
 import { connect } from "react-redux";
 import MediaBinContentsView from "./MediaBinContentsView";
 import MediaBinDirectoryView from "./MediaBinDirectoryView";
-//two componets one for the files and the other for the previews
+
 const MediaBinView = ({ libraries }) => {
   const mediaDir = libraries.filter((f) => f.name === "Media");
 
   return (
-    <>
+    <section
+      className="grid grid-cols-2 h-[100%]"
+      style={{
+        gridTemplateColumns: "300px auto",
+        gridArea: "Media",
+      }}
+    >
       <MediaBinDirectoryView library={mediaDir} />
       <MediaBinContentsView />
-    </>
+    </section>
   );
 };
 

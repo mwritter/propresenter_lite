@@ -1,7 +1,0 @@
-.App {
-  display: grid;
-  grid-template-columns: auto 5fr auto;
-  /* grid-template: "library main main"; */
-  /* grid-template: "sidebar main main main"; */
-  /* background-color: rgb(0, 0, 0); */
-}

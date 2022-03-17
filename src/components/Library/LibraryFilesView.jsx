@@ -12,7 +12,7 @@ const LibraryFilesView = ({ libraries, currentLibrary, setCurrentLibrary }) => {
 
   // this can probably be consolidated
   return (
-    <section className="bg-neutral-700">
+    <section className="bg-neutral-700 overflow-hidden w-[300px]">
       <h3 className="section-header-top text-xs  border-t-2 border-b-2 border-gray-900 uppercase">
         <div className="flex justify-between items-center px-2">
           <span className="font-bold">Library</span>
@@ -49,8 +49,7 @@ const LibraryFilesView = ({ libraries, currentLibrary, setCurrentLibrary }) => {
               <li
                 key={dir.name}
                 onClick={() => {
-                  if (!currentLibrary || dir.name !== currentLibrary.name)
-                    setCurrentLibrary(dir);
+                  if (!isCurrentLibrary(dir)) setCurrentLibrary(dir);
                 }}
                 className={`${
                   isCurrentLibrary(dir) ? "bg-gray-400" : ""

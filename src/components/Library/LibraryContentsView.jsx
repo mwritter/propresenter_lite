@@ -5,7 +5,7 @@ import { setCurrentFile } from "../../redux/library/library.actions";
 function LibraryContentsView({ library, currentFile, setCurrentFile }) {
   const isCurrentFile = (f) => currentFile && f.name === currentFile.name;
   return (
-    <section className="bg-neutral-800">
+    <section className="bg-neutral-800 w-[300px]">
       <div className="mb-2">
         <p className="section-header-top text-xs font-bold p-2 border-t-2 border-b-2 border-gray-900">
           ITEMS

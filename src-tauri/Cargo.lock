@@ -700,6 +700,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "data-url"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3a30bfce702bcfa94e906ef82421f2c0e61c076ad76030c16ee5d2e9a32fe193"
+dependencies = [
+ "matches",
+]
+
+[[package]]
 name = "deflate"
 version = "0.7.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3105,6 +3114,7 @@ dependencies = [
  "attohttpc",
  "bincode",
  "cfg_aliases",
+ "data-url",
  "dirs-next",
  "either",
  "embed_plist",

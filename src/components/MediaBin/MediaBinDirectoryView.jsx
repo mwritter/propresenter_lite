@@ -22,11 +22,7 @@ function MediaBinDirectoryView({
               <li
                 key={dir.name}
                 onClick={() => {
-                  if (
-                    !currentMediaLibrary ||
-                    dir.name !== currentMediaLibrary.name
-                  )
-                    setCurrentMediaLibrary(dir);
+                  if (!isCurrentLibrary(dir)) setCurrentMediaLibrary(dir);
                 }}
                 className={`${
                   isCurrentLibrary(dir) ? "bg-gray-400" : ""

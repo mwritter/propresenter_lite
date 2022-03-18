@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   currentLibrary: null,
   playlists: [],
   currentPlaylist: null,
-  files: [],
+  currentFiles: {},
   currentFile: null,
 };
 
@@ -20,14 +20,20 @@ const reducer = (state = INITIAL_STATE, action) => {
     case actions.SET_CURRENT_LIBRARY:
       return {
         ...state,
-        currentLibrary: action.payload
-      }
+        currentLibrary: action.payload,
+      };
 
     case actions.SET_CURRENT_FILE:
       return {
         ...state,
-        currentFile: action.payload
-      }
+        currentFile: action.payload,
+      };
+
+    case actions.SET_CURRENT_FILES:
+      return {
+        ...state,
+        currentFiles: action.payload,
+      };
 
     default:
       return state;

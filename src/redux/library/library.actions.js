@@ -11,3 +11,7 @@ export const setCurrentLibrary = (library) => {
 export const setCurrentFile = (file) => {
   return { type: actions.SET_CURRENT_FILE, payload: file };
 };
+
+export const setCurrentFiles = (files) => {
+  return { type: actions.SET_CURRENT_FILES, payload: files };
+};

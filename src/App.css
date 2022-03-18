@@ -1,13 +1,21 @@
+main {
+}
+
 .App {
   display: grid;
   grid-template-areas:
-    "Library Main"
+    "ToolBar ToolBar"
+    "Library Show"
     "Media Media";
   grid-template-columns: auto 5fr auto;
-  grid-template-rows: 3fr 1fr;
+  grid-template-rows: 75px 1fr auto;
   background-color: rgb(0, 0, 0);
 }
 
 video::-webkit-media-controls {
-  display:none !important;
+  display: none !important;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

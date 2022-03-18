@@ -1,14 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setCurrentLibrary } from "../../redux/library/library.actions";
+import {
+  setCurrentFiles,
+  setCurrentLibrary,
+} from "../../redux/library/library.actions";
 
-const LibraryFilesView = ({ libraries, currentLibrary, setCurrentLibrary }) => {
+const LibraryFilesView = ({
+  libraries,
+  currentLibrary,
+  currentFiles,
+  setCurrentLibrary,
+  setCurrentFiles,
+}) => {
   // we need these directories so we should get or create them
   const libraryDir = libraries.filter((f) => f.name === "Library");
   const playlistDir = libraries.filter((f) => f.name === "Playlists");
   const getDirectories = (f) => f.filter((c) => !!c.children);
   const isCurrentLibrary = (library) =>
     currentLibrary && library.name === currentLibrary.name;
+
+  const selectPlaylist = (dir) => {
+    setCurrentLibrary(dir);
+    if (currentFiles.dir?.path !== dir.path) {
+      setCurrentFiles({ dir, files: dir.children });
+    }
+  };
 
   // this can probably be consolidated
   return (
@@ -20,29 +36,6 @@ const LibraryFilesView = ({ libraries, currentLibrary, setCurrentLibrary }) => {
         </div>
       </h3>
       {getDirectories(libraryDir).map((c) => (
-        <div key={c.name} className="mb-2">
-          <ul>
-            {getDirectories(c.children).map((dir) => (
-              <li
-                key={dir.name}
-                onClick={() => {
-                  if (!currentLibrary || dir.name !== currentLibrary.name)
-                    setCurrentLibrary(dir);
-                }}
-                className={`${
-                  isCurrentLibrary(dir) ? "bg-gray-400" : ""
-                } px-2 py-1 text-xs hover:bg-gray-400 hover:cursor-pointer`}
-              >
-                {dir.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-      <h3 className="section-header-top text-xs font-bold p-2 border-t-2 border-b-2 border-gray-900 uppercase">
-        Playlists
-      </h3>
-      {getDirectories(playlistDir).map((c) => (
         <div key={c.name} className="mb-2">
           <ul>
             {getDirectories(c.children).map((dir) => (
@@ -61,6 +54,28 @@ const LibraryFilesView = ({ libraries, currentLibrary, setCurrentLibrary }) => {
           </ul>
         </div>
       ))}
+      <h3 className="section-header-top text-xs font-bold p-2 border-t-2 border-b-2 border-gray-900 uppercase">
+        Playlist
+      </h3>
+      {getDirectories(playlistDir).map((c) => (
+        <div key={c.name} className="mb-2">
+          <ul>
+            {getDirectories(c.children).map((dir) => (
+              <li
+                key={dir.name}
+                onClick={() => {
+                  if (!isCurrentLibrary(dir)) selectPlaylist(dir);
+                }}
+                className={`${
+                  isCurrentLibrary(dir) ? "bg-gray-400" : ""
+                } px-2 py-1 text-xs hover:bg-gray-400 hover:cursor-pointer`}
+              >
+                {dir.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </section>
   );
 };
@@ -68,10 +83,12 @@ const LibraryFilesView = ({ libraries, currentLibrary, setCurrentLibrary }) => {
 const mapStateToProps = (state) => ({
   libraries: state.library.libraries,
   currentLibrary: state.library.currentLibrary,
+  currentFiles: state.library.currentFiles,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentLibrary: (library) => dispatch(setCurrentLibrary(library)),
+  setCurrentFiles: (files) => dispatch(setCurrentFiles(files)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LibraryFilesView);

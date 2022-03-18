@@ -4,6 +4,7 @@ import { setCurrentFile } from "../../redux/library/library.actions";
 
 function LibraryContentsView({ library, currentFile, setCurrentFile }) {
   const isCurrentFile = (f) => currentFile && f.name === currentFile.name;
+  const getFileName = (f) => f.name.split(".")[0];
   return (
     <section className="bg-neutral-800 w-[300px]">
       <div className="mb-2">
@@ -22,7 +23,7 @@ function LibraryContentsView({ library, currentFile, setCurrentFile }) {
                     isCurrentFile(file) ? "bg-gray-400" : ""
                   } px-2 py-1 text-xs hover:bg-gray-400 hover:cursor-pointer`}
                 >
-                  {file.name}
+                  {getFileName(file)}
                 </li>
               ))
             : null}

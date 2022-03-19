@@ -73,14 +73,6 @@
         "height": 1200,
         "resizable": true,
         "fullscreen": false
-      },
-      {
-        "label": "projector",
-        "width": 800,
-        "height": 600,
-        "url": "projector.html",
-        "resizable": true,
-        "visible": false
       }
     ],
     "security": {

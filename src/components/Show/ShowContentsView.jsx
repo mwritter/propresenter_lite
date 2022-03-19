@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { connect } from "react-redux";
+import { useProjector, ACTIONS } from "../../context/ProjectorContext";
 const ShowContentsView = ({ currentFiles }) => {
+  const { projectorDispatch } = useProjector();
   const [items, setItems] = useState([]);
   const [selectedSlide, setSelectedSlide] = useState(null);
 
@@ -45,7 +47,13 @@ const ShowContentsView = ({ currentFiles }) => {
               </div>
               {item.slides?.map((slide, j) => (
                 <div
-                  onClick={() => onSelectSlide(slide, `${i}-${j}`)}
+                  onClick={() => {
+                    projectorDispatch({
+                      type: ACTIONS.UPDATE_TEXT,
+                      payload: slide.text,
+                    });
+                    onSelectSlide(slide, `${i}-${j}`);
+                  }}
                   key={`${i}-${j}`}
                   id={`${i}-${j}`}
                   className={`${

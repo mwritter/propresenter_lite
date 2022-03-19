@@ -4,15 +4,18 @@ import MediaBinView from "./components/MediaBin/MediaBinView";
 import "./App.css";
 import ShowView from "./components/Show/ShowView";
 import ToolBarView from "./components/ToolBar/ToolBarView";
+import { ProjectorProvider } from "./context/ProjectorContext";
 
 function App() {
   return (
-    <div className="App h-screen text-white">
-      <ToolBarView />
-      <ShowView />
-      <LibraryView />
-      <MediaBinView />
-    </div>
+    <ProjectorProvider>
+      <div className="App h-screen text-white">
+        <ToolBarView />
+        <ShowView />
+        <LibraryView />
+        <MediaBinView />
+      </div>
+    </ProjectorProvider>
   );
 }
 

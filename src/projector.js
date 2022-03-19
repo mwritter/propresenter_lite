@@ -1,10 +1,18 @@
 import { appWindow } from "@tauri-apps/api/window";
+import { emit, listen } from "@tauri-apps/api/event";
+import { convertFileSrc } from "@tauri-apps/api/tauri";
+import { ACTIONS } from "./context/ProjectorContext";
 
-/**
- * TODO: this will be the logic for the Projector screen, we need to be able to invoke this event
- * when an image/mostion graphic is selected to update the dom with a fullscreen looping video of the
- */
+const unlisten_new_graphic = listen(ACTIONS.UPDATE_BACKGROUND, (ev) => {
+  const video = document.getElementById("video");
+  const source = document.getElementById("source");
+  const src = ev.payload.replace(".jpg", ".mp4");
+  source.src = convertFileSrc(src);
+  video.load();
+});
 
-appWindow.listen("new_graphic", ({ event, payload }) => {
-  console.log("Invoked from the backend");
+const unlisten_new_text = listen(ACTIONS.UPDATE_TEXT, (ev) => {
+  const text = document.getElementById("text");
+  const value = ev.payload;
+  text.textContent = value;
 });

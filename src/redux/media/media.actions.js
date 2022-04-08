@@ -11,3 +11,15 @@ export const setCurrentMediaLibrary = (library) => {
 export const setCurrentMediaFile = (file) => {
   return { type: actions.SET_CURRENT_MEDIA_FILE, payload: file };
 };
+
+export const setCurrentTime = (time) => {
+  return { type: actions.SET_CURRENT_TIME, payload: time };
+};
+
+export const setCurrentMediaText = (text) => {
+  return { type: actions.SET_CURRENT_MEDIA_TEXT, payload: text };
+};
+
+export const setProjector = (projector) => {
+  return { type: actions.SET_PROJECTOR, payload: projector };
+};

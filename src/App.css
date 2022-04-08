@@ -1,21 +1,26 @@
-main {
-}
-
 .App {
   display: grid;
   grid-template-areas:
-    "ToolBar ToolBar"
-    "Library Show"
-    "Media Media";
+    "ToolBar ToolBar ToolBar"
+    "Library Show Preview"
+    "Media Media Preview";
   grid-template-columns: auto 5fr auto;
   grid-template-rows: 75px 1fr auto;
   background-color: rgb(0, 0, 0);
 }
 
 video::-webkit-media-controls {
-  display: none !important;
+  /* display: none !important; */
 }
 
-::-webkit-scrollbar {
-  display: none;
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
 }

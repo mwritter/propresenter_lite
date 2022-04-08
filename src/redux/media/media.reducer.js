@@ -4,6 +4,9 @@ const INITIAL_STATE = {
   mediaLibraries: [],
   currentMediaLibrary: null,
   currentMediaFile: null,
+  currentTime: 0,
+  currentMediaText: "",
+  projector: null,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -20,11 +23,30 @@ const reducer = (state = INITIAL_STATE, action) => {
         currentMediaLibrary: action.payload,
       };
 
-    case actions.SET_CURRENT_MEDIA_FILE:
+    case actions.SET_CURRENT_MEDIA_FILE: {
       return {
         ...state,
         currentMediaFile: action.payload,
       };
+    }
+    case actions.SET_CURRENT_TIME: {
+      return {
+        ...state,
+        currentTime: action.payload,
+      };
+    }
+    case actions.SET_CURRENT_MEDIA_TEXT: {
+      return {
+        ...state,
+        currentMediaText: action.payload,
+      };
+    }
+    case actions.SET_PROJECTOR: {
+      return {
+        ...state,
+        projector: action.payload,
+      };
+    }
 
     default:
       return state;

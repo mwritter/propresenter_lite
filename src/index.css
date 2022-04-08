@@ -8,21 +8,3 @@
   margin: 0;
   padding: 0;
 }
-
-/* Used with react-split might need to implement react-split maunally */
-.gutter {
-  background-color: #eee;
-
-  background-repeat: no-repeat;
-  background-position: 50%;
-}
-
-.gutter.gutter-horizontal {
-  background-image: url("grips/vertical.png");
-  cursor: col-resize;
-}
-
-.gutter.gutter-vertical {
-  background-image: url("grips/horizontal.png");
-  cursor: row-resize;
-}

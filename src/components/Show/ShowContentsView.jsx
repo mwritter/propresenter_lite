@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { connect } from "react-redux";
-import { useProjector, ACTIONS } from "../../context/ProjectorContext";
-const ShowContentsView = ({ currentFiles }) => {
-  const { projectorDispatch } = useProjector();
+// import { useProjector } from "../../context/Projector/ProjectorContext";
+import { ACTIONS } from "../../context/Projector/ProjectorActions";
+import { emit } from "@tauri-apps/api/event";
+import { invoke } from "@tauri-apps/api";
+import { setCurrentMediaText } from "../../redux/media/media.actions";
+const ShowContentsView = ({ currentFiles, setCurrentMediaText }) => {
+  // const { projectorDispatch } = useProjector();
   const [items, setItems] = useState([]);
   const [selectedSlide, setSelectedSlide] = useState(null);
 
@@ -20,7 +24,6 @@ const ShowContentsView = ({ currentFiles }) => {
       }
       Promise.all(promises).then(() => {
         setItems(data);
-        console.log(data);
       });
     }
   }, [currentFiles]);
@@ -36,7 +39,8 @@ const ShowContentsView = ({ currentFiles }) => {
   };
   return (
     <section
-      className="grid h-1000px overflow-scroll pl-10"
+      className="grid h-1000px pl-10
+      overflow-x-scroll scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-slate-600 overflow-y-scroll"
       style={{ gridArea: "Show" }}
     >
       {items.length
@@ -48,11 +52,15 @@ const ShowContentsView = ({ currentFiles }) => {
               {item.slides?.map((slide, j) => (
                 <div
                   onClick={() => {
-                    projectorDispatch({
-                      type: ACTIONS.UPDATE_TEXT,
-                      payload: slide.text,
+                    // projectorDispatch({
+                    //   type: ACTIONS.UPDATE_TEXT,
+                    //   payload: slide.text,
+                    // });
+                    invoke("text_selected", { text: slide.text }).then(() => {
+                      emit(ACTIONS.UPDATE_TEXT);
+                      onSelectSlide(slide, `${i}-${j}`);
+                      setCurrentMediaText(slide.text);
                     });
-                    onSelectSlide(slide, `${i}-${j}`);
                   }}
                   key={`${i}-${j}`}
                   id={`${i}-${j}`}
@@ -80,4 +88,8 @@ const mapStateToProps = (state) => ({
   currentFiles: state.library.currentFiles,
 });
 
-export default connect(mapStateToProps)(ShowContentsView);
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentMediaText: (text) => dispatch(setCurrentMediaText(text)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShowContentsView);

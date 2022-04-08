@@ -1,10 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { setCurrentFile } from "../../redux/library/library.actions";
-import { useProjector, ACTIONS } from "../../context/ProjectorContext";
 
 function LibraryContentsView({ library, currentFile, setCurrentFile }) {
-  const { projectorDispatch } = useProjector();
   const isCurrentFile = (f) => currentFile && f.name === currentFile.name;
   const getFileName = (f) => f.name.split(".")[0];
   return (

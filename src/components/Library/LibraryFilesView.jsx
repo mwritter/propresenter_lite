@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import useDirectory from "../../hooks/tauri/useDirectory";
 import {
   setCurrentFiles,
   setCurrentLibrary,
@@ -12,19 +13,41 @@ const LibraryFilesView = ({
   setCurrentLibrary,
   setCurrentFiles,
 }) => {
+  const [libraryDir, setLibraryDir] = useState([]);
+  const [playlistDir, setPlaylistDir] = useState([]);
   // we need these directories so we should get or create them
-  const libraryDir = libraries.filter((f) => f.name === "Library");
-  const playlistDir = libraries.filter((f) => f.name === "Playlists");
-  const getDirectories = (f) => f.filter((c) => !!c.children);
-  const isCurrentLibrary = (library) =>
-    currentLibrary && library.name === currentLibrary.name;
+  const getDirectories = useCallback((f) => f.filter((c) => !!c.children), []);
+  const isCurrentLibrary = useCallback(
+    (library) => currentLibrary && library.name === currentLibrary.name,
+    [currentLibrary]
+  );
 
-  const selectPlaylist = (dir) => {
-    setCurrentLibrary(dir);
-    if (currentFiles.dir?.path !== dir.path) {
-      setCurrentFiles({ dir, files: dir.children });
-    }
-  };
+  const selectPlaylist = useCallback(
+    (dir) => {
+      setCurrentLibrary(dir);
+      if (currentFiles.dir?.path !== dir.path) {
+        setCurrentFiles({ dir, files: dir.children });
+      }
+    },
+    [setCurrentFiles, setCurrentLibrary, currentFiles]
+  );
+
+  useEffect(() => {
+    // get the Library Directory
+    const getLibraryDir = async () => {
+      const dir = await useDirectory("ProPresLite\\Library");
+      setLibraryDir(dir);
+    };
+
+    // get the PlaylistDir
+    const getPlaylistDir = async () => {
+      const dir = await useDirectory("ProPresLite\\Playlists");
+      setPlaylistDir(dir);
+    };
+
+    getLibraryDir();
+    getPlaylistDir();
+  }, [useDirectory]);
 
   // this can probably be consolidated
   return (

@@ -47,7 +47,7 @@ const PreviewView = ({
   return (
     <section
       className="bg-neutral-700 grid items-start max-w-[400px]"
-      style={{ gridName: "Preview", gridRow: "2/-1" }}
+      style={{ gridArea: "Preview", gridRowStart: "3", gridRowEnd: "-1" }}
     >
       <div className="p-4 grid">
         <PreviewVideo />

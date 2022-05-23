@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { convertFileSrc, invoke } from "@tauri-apps/api/tauri";
 import { connect } from "react-redux";
 import { setCurrentMediaFile } from "../../redux/media/media.actions";
@@ -10,11 +10,11 @@ function MediaBinContentsView({
   currentMediaLibrary,
   currentMediaFile,
   setCurrentMediaFile,
-  projector,
 }) {
-  const [currentMotionGraphic, setCurrentMotionGraphic] = useState(null);
-  const isCurrentFile = (f) =>
-    currentMediaFile && f.name === currentMediaFile.name;
+  const isCurrentFile = useCallback(
+    (f) => currentMediaFile && f.name === currentMediaFile.name,
+    [currentMediaFile]
+  );
 
   const hasVideo = (path) => {
     let result = false;
@@ -37,21 +37,12 @@ function MediaBinContentsView({
     });
   };
 
-  // TODO: this needs to be in a Preview component not in the Media Bin
-  const imageClicked = (file) => {
-    // this will be used to tell the Projector monitor to show an image
-    // invoke("image_selected");
-    // projectorDispatch({ type: ACTIONS.UPDATE_BACKGROUND, payload: file.path });
-    setCurrentMotionGraphic(file);
-  };
-
   // TODO: ever item in here should be a lower res image/thumbnail
   return (
     <section
       className="bg-neutral-900 mx-2 border-t-8 border-neutral-900
-      grid grid-cols-3 xl:grid-cols-6 2xl:grid-cols-8 p-5 gap-2 min-w-[500px] rounded-t-xl
+      flex flex-wrap flex-row p-5 gap-2 rounded-t-xl
       scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-slate-600 overflow-y-scroll"
-      style={{ gridTemplateRows: "min-content" }}
     >
       {currentMediaLibrary
         ? currentMediaLibrary.children
@@ -66,9 +57,9 @@ function MediaBinContentsView({
                     : "border-4 border-neutral-900 rounded-xl"
                 } hover:cursor-pointer overflow-hidden h-min rounded-xl"`}
               >
-                <div onClick={() => imageClicked(file)}>
+                <div>
                   <img
-                    className="rounded-lg"
+                    className="rounded-lg w-[200px]"
                     src={convertFileSrc(file.path)}
                     alt={file.name}
                   />

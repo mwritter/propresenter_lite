@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import { setCurrentMediaLibrary } from "../../redux/media/media.actions";
 
@@ -7,9 +7,12 @@ function MediaBinDirectoryView({
   currentMediaLibrary,
   setCurrentMediaLibrary,
 }) {
-  const getDirectories = (f) => f.filter((c) => !!c.children);
-  const isCurrentLibrary = (library) =>
-    currentMediaLibrary && library.name === currentMediaLibrary.name;
+  const getDirectories = useCallback((f) => f.filter((c) => !!c.children));
+  const isCurrentLibrary = useCallback(
+    (library) =>
+      currentMediaLibrary && library.name === currentMediaLibrary.name,
+    [currentMediaLibrary]
+  );
   return (
     <section className="bg-neutral-700">
       <h3 className="section-header-top text-xs font-bold p-2 border-t-2 border-b-2 border-gray-900 uppercase">

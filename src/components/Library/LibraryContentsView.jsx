@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { connect } from "react-redux";
 import { setCurrentFile } from "../../redux/library/library.actions";
 
 function LibraryContentsView({ library, currentFile, setCurrentFile }) {
-  const isCurrentFile = (f) => currentFile && f.name === currentFile.name;
-  const getFileName = (f) => f.name.split(".")[0];
+  const isCurrentFile = useCallback(
+    (f) => currentFile && f.name === currentFile.name,
+    [currentFile]
+  );
+  const getFileName = useCallback((f) => f.name.split(".")[0], []);
   return (
     <section className="bg-neutral-800 w-[300px]">
       <div className="mb-2">

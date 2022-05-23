@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { readTextFile } from "@tauri-apps/api/fs";
 import { connect } from "react-redux";
-// import { useProjector } from "../../context/Projector/ProjectorContext";
 import { ACTIONS } from "../../context/Projector/ProjectorActions";
 import { emit } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api";
 import { setCurrentMediaText } from "../../redux/media/media.actions";
 const ShowContentsView = ({ currentFiles, setCurrentMediaText }) => {
-  // const { projectorDispatch } = useProjector();
   const [items, setItems] = useState([]);
   const [selectedSlide, setSelectedSlide] = useState(null);
 
@@ -39,7 +37,7 @@ const ShowContentsView = ({ currentFiles, setCurrentMediaText }) => {
   };
   return (
     <section
-      className="grid h-1000px pl-10
+      className="grid h-1000px pl-10 mx-2
       overflow-x-scroll scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-slate-600 overflow-y-scroll"
       style={{ gridArea: "Show" }}
     >
@@ -52,10 +50,6 @@ const ShowContentsView = ({ currentFiles, setCurrentMediaText }) => {
               {item.slides?.map((slide, j) => (
                 <div
                   onClick={() => {
-                    // projectorDispatch({
-                    //   type: ACTIONS.UPDATE_TEXT,
-                    //   payload: slide.text,
-                    // });
                     invoke("text_selected", { text: slide.text }).then(() => {
                       emit(ACTIONS.UPDATE_TEXT);
                       onSelectSlide(slide, `${i}-${j}`);

@@ -26,8 +26,6 @@ const ToolBarView = () => {
       className="h-[75px] bg-neutral-700 grid px-10 space-x-12 grid-cols-3 items-center"
       style={{
         gridArea: "ToolBar",
-        gridRow: "1/1",
-        gridColumn: "1/4",
         gridTemplateColumns: "auto 1fr auto",
       }}
     >

@@ -39,45 +39,43 @@ function MediaBinContentsView({
 
   // TODO: ever item in here should be a lower res image/thumbnail
   return (
-    <section
-      className="bg-neutral-900 mx-2 border-t-8 border-neutral-900
-      flex flex-wrap flex-row p-5 gap-2 rounded-t-xl
-      scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-slate-600 overflow-y-scroll"
-    >
-      {currentMediaLibrary
-        ? currentMediaLibrary.children
-            .filter((file) => !file.name.includes(".mp4"))
-            .map((file) => (
-              <div
-                onClick={() => handleOnClick(file)}
-                key={file.name}
-                className={`${
-                  isCurrentFile(file)
-                    ? "border-4 border-gray-300 rounded-xl"
-                    : "border-4 border-neutral-900 rounded-xl"
-                } hover:cursor-pointer overflow-hidden h-min rounded-xl"`}
-              >
-                <div>
-                  <img
-                    className="rounded-lg w-[200px]"
-                    src={convertFileSrc(file.path)}
-                    alt={file.name}
-                  />
-                </div>
-                <span className="flex gap-1 p-2">
-                  <div className="">
-                    <AiOutlinePlayCircle />
+    <section className="bg-neutral-900 mx-2 border-t-8 border-neutral-900 rounded-t-xl scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-slate-600 overflow-y-scroll h-[25vh]">
+      <div className="flex flex-wrap flex-row p-5 gap-2">
+        {currentMediaLibrary
+          ? currentMediaLibrary.children
+              .filter((file) => !file.name.includes(".mp4"))
+              .map((file) => (
+                <div
+                  onClick={() => handleOnClick(file)}
+                  key={file.name}
+                  className={`${
+                    isCurrentFile(file)
+                      ? "border-4 border-gray-300 rounded-xl"
+                      : "border-4 border-neutral-900 rounded-xl"
+                  } hover:cursor-pointer overflow-hidden h-min rounded-xl"`}
+                >
+                  <div className="w-[150px]">
+                    <img
+                      className="rounded-lg w-fit"
+                      src={convertFileSrc(file.path)}
+                      alt={file.name}
+                    />
+                    <span className="flex gap-1 p-2">
+                      <div className="">
+                        <AiOutlinePlayCircle />
+                      </div>
+                      <p
+                        title={file.name}
+                        className="text-xs font-thin text-gray-500"
+                      >
+                        {file.name.substring(0, 15)}
+                      </p>
+                    </span>
                   </div>
-                  <p
-                    title={file.name}
-                    className="text-xs font-thin text-gray-500"
-                  >
-                    {file.name.substring(0, 15)}
-                  </p>
-                </span>
-              </div>
-            ))
-        : null}
+                </div>
+              ))
+          : null}
+      </div>
     </section>
   );
 }

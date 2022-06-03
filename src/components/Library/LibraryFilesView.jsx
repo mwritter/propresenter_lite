@@ -16,7 +16,10 @@ const LibraryFilesView = ({
   const [libraryDir, setLibraryDir] = useState([]);
   const [playlistDir, setPlaylistDir] = useState([]);
   // we need these directories so we should get or create them
-  const getDirectories = useCallback((f) => f.filter((c) => !!c.children), []);
+  const getDirectories = (dir) => {
+    console.log("DIR: ", dir);
+    return dir.filter((d) => !!d?.children);
+  };
   const isCurrentLibrary = useCallback(
     (library) => currentLibrary && library.name === currentLibrary.name,
     [currentLibrary]
@@ -58,47 +61,43 @@ const LibraryFilesView = ({
           <span className="text-lg hover:cursor-pointer">+</span>
         </div>
       </h3>
-      {getDirectories(libraryDir).map((c) => (
-        <div key={c.name} className="mb-2">
-          <ul>
-            {getDirectories(c.children).map((dir) => (
-              <li
-                key={dir.name}
-                onClick={() => {
-                  if (!isCurrentLibrary(dir)) setCurrentLibrary(dir);
-                }}
-                className={`${
-                  isCurrentLibrary(dir) ? "bg-gray-400" : ""
-                } px-2 py-1 text-xs hover:bg-gray-400 hover:cursor-pointer`}
-              >
-                {dir.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <div className="mb-2">
+        <ul>
+          {getDirectories(libraryDir).map((c) => (
+            <li
+              key={c.name}
+              onClick={() => {
+                if (!isCurrentLibrary(c)) setCurrentLibrary(c);
+              }}
+              className={`${
+                isCurrentLibrary(c) ? "bg-gray-400" : ""
+              } px-2 py-1 text-xs hover:bg-gray-400 hover:cursor-pointer`}
+            >
+              {c.name}
+            </li>
+          ))}
+        </ul>
+      </div>
       <h3 className="section-header-top text-xs font-bold p-2 border-t-2 border-b-2 border-gray-900 uppercase">
         Playlist
       </h3>
-      {getDirectories(playlistDir).map((c) => (
-        <div key={c.name} className="mb-2">
-          <ul>
-            {getDirectories(c.children).map((dir) => (
-              <li
-                key={dir.name}
-                onClick={() => {
-                  if (!isCurrentLibrary(dir)) selectPlaylist(dir);
-                }}
-                className={`${
-                  isCurrentLibrary(dir) ? "bg-gray-400" : ""
-                } px-2 py-1 text-xs hover:bg-gray-400 hover:cursor-pointer`}
-              >
-                {dir.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+      <div className="mb-2">
+        <ul>
+          {getDirectories(playlistDir).map((c) => (
+            <li
+              key={c.name}
+              onClick={() => {
+                if (!isCurrentLibrary(c)) selectPlaylist(c);
+              }}
+              className={`${
+                isCurrentLibrary(c) ? "bg-gray-400" : ""
+              } px-2 py-1 text-xs hover:bg-gray-400 hover:cursor-pointer`}
+            >
+              {c.name}
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 };

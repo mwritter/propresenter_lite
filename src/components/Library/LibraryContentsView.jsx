@@ -10,7 +10,7 @@ function LibraryContentsView({ library, currentFile, setCurrentFile }) {
   const getFileName = useCallback((f) => f.name.split(".")[0], []);
   return (
     <section className="bg-neutral-800 w-[300px]">
-      <div className="mb-2">
+      <div className="mb-2 justify-center">
         <p className="section-header-top text-xs font-bold p-2 border-t-2 border-b-2 border-gray-900">
           ITEMS
         </p>

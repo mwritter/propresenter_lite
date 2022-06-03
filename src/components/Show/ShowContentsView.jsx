@@ -37,41 +37,50 @@ const ShowContentsView = ({ currentFiles, setCurrentMediaText }) => {
   };
   return (
     <section
-      className="grid h-1000px pl-10 mx-2
+      className="grid h-1000px mx-2
       overflow-x-scroll scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-slate-600 overflow-y-scroll"
       style={{ gridArea: "Show" }}
     >
       {items.length
         ? items.map((item, i) => (
-            <div key={i} className="flex flex-wrap h-min">
+            <>
               <div className="bg-slate-800 w-full my-5 rounded-lg">
                 <p className="p-2">{item.title}</p>
               </div>
-              {item.slides?.map((slide, j) => (
-                <div
-                  onClick={() => {
-                    invoke("text_selected", { text: slide.text }).then(() => {
-                      emit(ACTIONS.UPDATE_TEXT);
-                      onSelectSlide(slide, `${i}-${j}`);
-                      setCurrentMediaText(slide.text);
-                    });
-                  }}
-                  key={`${i}-${j}`}
-                  id={`${i}-${j}`}
-                  className={`${
-                    isCurrentlySelected(`${i}-${j}`)
-                      ? "border-4 border-green-300"
-                      : "border-4 border-gray-500 border-opacity-50"
-                  } rounded-xl h-[200px] w-[350px] grid grid-rows-2 m-3 hover:cursor-pointer bg-slate-600 bg-opacity-30`}
-                  style={{ alignItems: "end" }}
-                >
-                  <p className="text-sm font-thin text-center flex-1 px-5">
-                    {slide.text}
-                  </p>
-                  <div className="bg-gray-400 mb-1 h-3 w-[90%] justify-self-center rounded-xl"></div>
-                </div>
-              ))}
-            </div>
+              <div
+                key={i}
+                className="grid justify-center h-min"
+                style={{
+                  gridTemplateColumns:
+                    "repeat(auto-fill, minmax(300px, 350px))",
+                }}
+              >
+                {item.slides?.map((slide, j) => (
+                  <div
+                    onClick={() => {
+                      invoke("text_selected", { text: slide.text }).then(() => {
+                        emit(ACTIONS.UPDATE_TEXT);
+                        onSelectSlide(slide, `${i}-${j}`);
+                        setCurrentMediaText(slide.text);
+                      });
+                    }}
+                    key={`${i}-${j}`}
+                    id={`${i}-${j}`}
+                    className={`${
+                      isCurrentlySelected(`${i}-${j}`)
+                        ? "border-4 border-green-300"
+                        : "border-4 border-gray-500 border-opacity-50"
+                    } rounded-xl h-[200px] grid grid-rows-2 m-3 hover:cursor-pointer bg-slate-600 bg-opacity-30`}
+                    style={{ alignItems: "end" }}
+                  >
+                    <p className="text-sm font-thin text-center flex-1 px-5">
+                      {slide.text}
+                    </p>
+                    <div className="bg-gray-400 mb-1 h-3 w-[90%] justify-self-center rounded-xl"></div>
+                  </div>
+                ))}
+              </div>
+            </>
           ))
         : null}
     </section>

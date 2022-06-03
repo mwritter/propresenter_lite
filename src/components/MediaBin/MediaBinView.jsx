@@ -8,7 +8,7 @@ const MediaBinView = ({ libraries }) => {
 
   return (
     <section
-      className="grid grid-cols-2 max-h-[500px]"
+      className="grid grid-cols-2 h-[25vh]"
       style={{
         gridTemplateColumns: "300px auto",
         gridArea: "Media",

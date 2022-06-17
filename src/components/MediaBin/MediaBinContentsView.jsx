@@ -40,7 +40,13 @@ function MediaBinContentsView({
   // TODO: ever item in here should be a lower res image/thumbnail
   return (
     <section className="bg-neutral-900 mx-2 border-t-8 border-neutral-900 rounded-t-xl scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-slate-600 overflow-y-scroll h-[25vh]">
-      <div className="flex flex-wrap flex-row p-5 gap-2">
+      <div
+        // className="flex flex-wrap flex-row p-5 gap-2"
+        className="grid justify-center h-min gap-2"
+        style={{
+          gridTemplateColumns: "repeat(auto-fill, minmax(150px, 175px))",
+        }}
+      >
         {currentMediaLibrary
           ? currentMediaLibrary.children
               .filter((file) => !file.name.includes(".mp4"))
@@ -54,7 +60,7 @@ function MediaBinContentsView({
                       : "border-4 border-neutral-900 rounded-xl"
                   } hover:cursor-pointer overflow-hidden h-min rounded-xl"`}
                 >
-                  <div className="w-[150px]">
+                  <div className="w-fill">
                     <img
                       className="rounded-lg w-fit"
                       src={convertFileSrc(file.path)}

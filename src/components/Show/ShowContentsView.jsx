@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { readTextFile } from "@tauri-apps/api/fs";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { ACTIONS } from "../../context/Projector/ProjectorActions";
 import { emit } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api";
 import { setCurrentMediaText } from "../../redux/media/media.actions";
 const ShowContentsView = ({ currentFiles, setCurrentMediaText }) => {
-  const [items, setItems] = useState([]);
   const [selectedSlide, setSelectedSlide] = useState(null);
-
-  useEffect(() => {
-    if (currentFiles.files) {
-      const promises = [];
-      const data = [];
-      for (const file of currentFiles.files) {
-        promises.push(
-          readTextFile(file.path).then((res) => {
-            data.push(JSON.parse(res));
-          })
-        );
-      }
-      Promise.all(promises).then(() => {
-        setItems(data);
-      });
-    }
-  }, [currentFiles]);
 
   const isCurrentlySelected = (id) => {
     return selectedSlide && selectedSlide.id === id;
@@ -35,27 +16,27 @@ const ShowContentsView = ({ currentFiles, setCurrentMediaText }) => {
       setSelectedSlide({ text: slide.text, id });
     }
   };
+  // TODO: add 'section' name above 'title'
   return (
     <section
       className="grid h-1000px mx-2
       overflow-x-scroll scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-slate-600 overflow-y-scroll"
       style={{ gridArea: "Show" }}
     >
-      {items.length
-        ? items.map((item, i) => (
-            <>
+      {currentFiles.length
+        ? currentFiles.map(({ data }, i) => (
+            <div key={`${data}-${i}`}>
               <div className="bg-slate-800 w-full my-5 rounded-lg">
-                <p className="p-2">{item.title}</p>
+                <p className="p-2">{data.title}</p>
               </div>
               <div
-                key={i}
                 className="grid justify-center h-min"
                 style={{
                   gridTemplateColumns:
                     "repeat(auto-fill, minmax(300px, 350px))",
                 }}
               >
-                {item.slides?.map((slide, j) => (
+                {data.slides?.map((slide, j) => (
                   <div
                     onClick={() => {
                       invoke("text_selected", { text: slide.text }).then(() => {
@@ -80,7 +61,7 @@ const ShowContentsView = ({ currentFiles, setCurrentMediaText }) => {
                   </div>
                 ))}
               </div>
-            </>
+            </div>
           ))
         : null}
     </section>
